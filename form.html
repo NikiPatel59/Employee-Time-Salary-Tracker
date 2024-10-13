@@ -1,0 +1,34 @@
+<?php
+ include("connection1.php");
+  $sql = "select emp_number,emp_name from employee ";
+  $all_employeename = $conn->query($sql);
+?>
+
+<html>
+ <head>
+  <link rel="stylesheet" href="styles.css">
+ </head>
+   <body>
+   <p class="topnav"><a href = "employeesalary.html">Back</a><p>
+   <div id = "act">
+    <form action = "employee2.php" method = "post">
+       <label for = "empname">Employee Name</label>
+       <select name = "empname" id = "empname" required>
+        <?php
+         while($empname = mysqli_fetch_array($all_employeename,MYSQLI_ASSOC))
+          {
+        ?>
+           <option value = "<?php echo $empname["emp_number"]; ?>">
+            <?php echo $empname["emp_name"]; ?>
+           </option>
+        <?php
+          }
+        ?>
+       </select><br>
+       <label for = "salary">Salary per hour</label>
+       <input type = "number" name = "salary" id = "salary" required placeholder="Enter Salary per Hour"><br>
+       <input type = "submit" id = "submit" name = "submit"><br>
+     </div>
+    </form>
+   </body>
+</html>

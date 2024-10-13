@@ -1,0 +1,44 @@
+<html>
+<?php
+$servername = "localhost";
+ $username = "root";
+ $password = "";
+ $dbname = "myDB";
+  $conn = new mysqli($servername, $username, $password,$dbname);
+    $sql = "select * from employee";
+     $all_employee = $conn->query($sql);
+?>
+ <head><link rel="stylesheet" href="styles.css">
+ </head>
+  <body>
+   <div id = "demo"><p><a href = "form.html" id = "demo">Add New Employee</a><p></div>
+   <table border = "1">
+   <tr>
+   <th>Emp No</th>
+   <th>Emp Name</th>
+   <th>DateOfJoining</th>
+   <th>Department</th>
+   <th>Designation</th>
+   <th>Action</th>
+   </tr>
+   <?php
+    while($row=mysqli_fetch_array($all_employee)){
+    ?>
+    <tr>
+    <td id = "fir"><?php echo $row["emp_number"]?></td>
+    <td><?php echo $row["emp_name"]?></td>
+    <td><?php echo $row["date_of_joining"]?></td>
+    <td><?php echo $row["department"]?></td>
+    <td><?php echo $row["designation"]?></td>
+    <td id = "but"><a href="edit.html?emp_number=<?php echo $row["emp_number"]; ?>">Edit</a>
+    <a href="delete.php?emp_number=<?php echo $row["emp_number"];?>" onclick ="return confirm('Are you sure?')">Delete</a></td>
+    </tr>
+    <?php
+    }
+    ?>
+    
+    
+    </table>
+    
+  </body>
+  </html>

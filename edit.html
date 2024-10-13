@@ -1,0 +1,58 @@
+<html>
+ <head><link rel="stylesheet" href="styles.css"> </head>
+<?php
+include("connection1.php");
+  $sql = "select * from designation";
+  $all_designation = $conn->query($sql);
+  $sql = "select * from department";
+  $all_department = $conn->query($sql);
+  $sql = "select * from employee where emp_number = " . $_GET["emp_number"] ;
+  $all_employee=$conn->query($sql);
+?>
+   <div id = "act">
+    <form action = "employee.php" method = "post">
+       <?php $newempno = mysqli_fetch_assoc($all_employee);?>
+       <input type = "hidden" name = "empnumber1" id = "empnumber1" value=<?php echo $newempno["emp_number"]?>><br>
+
+       <label for = "empname">Employee Name</label>
+       <input type = "text" name = "empname1" id = "empname1" value=<?php echo $newempno["emp_name"]?>><br>
+
+       <label for = "dateofjoin">Date of Joining</label>
+       <input type = "date" name = "dateofjoin1" id = "dateofjoin1" value=<?php echo $newempno["date_of_joining"]?>><br>
+
+       <label for = "department">Department</label>
+       <select name = "department1" id = "department1" >
+       <?php
+        while($department = mysqli_fetch_assoc($all_department))
+          {
+          print_r($department);
+        ?>
+       <option value = "<?php echo $department["dept_name"]; ?>" <?php echo($newempno["department"]==$department["dept_name"])?"selected":""?>>
+             
+       <?php echo $department["dept_name"];?>
+       </option>
+       <?php
+          }
+       ?>
+            
+       </select><br>
+       <label for = "designation">Designation</label>
+       <select name = "designation1" id = "designation1" value=<?php echo $newdesignation["designation"]?>>
+       <?php
+        while($designation = mysqli_fetch_array($all_designation,MYSQLI_ASSOC))
+         {
+       ?>
+       <option value = "<?php echo $designation["desig_name"];?>"<?php echo($newempno["designation"]==$designation["desig_name"])?"selected":""?>>
+       <?php echo $designation["desig_name"]; ?>
+       </option>
+       <?php
+         }
+       ?>
+       </select><br>
+       <label for = "add"></label>
+       <input type = "submit" id = "submit1" name = "submit1">
+    </form>
+   </div>
+</html>
+
+ 

@@ -1,0 +1,33 @@
+<html>
+ <head><link rel="stylesheet" href="styles.css">
+ </head>
+<?php
+  include("connection1.php");
+   $sql ="select s.emp_number,e.emp_name,sum(ei.actualworkhour) as workhour,(s.salaryperhour*sum(ei.actualworkhour)) as totalsalary from employeesalary s inner join employeeinout ei on s.emp_number = ei.emp_number INNER join employee e on e.emp_number=ei.emp_number group by emp_number";
+   $all_employees = $conn->query($sql);
+?>
+ 
+  <body>
+   <p class="topnav"><a href = "form2.html">Add Employee Salary per Hour</a><p>
+    <table border = "1">
+     <tr>
+      <th>Emp No</th>
+      <th>Emp Name</th>
+      <th>Total Working Hours</th>
+      <th>Total Salary </th>
+     </tr>
+<?php
+   while($row=mysqli_fetch_array($all_employees)){
+?>
+     <tr>
+      <td id = "fir"><?php echo $row["emp_number"]?></td>
+      <td><?php echo $row["emp_name"]?></td>
+      <td><?php echo $row["workhour"]?></td>
+      <td><?php echo $row["totalsalary"]?></td>
+     </tr>
+<?php
+                                                 }
+?>
+    </table>
+  </body>
+</html>

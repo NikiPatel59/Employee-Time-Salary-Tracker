@@ -1,0 +1,33 @@
+<html>
+  <head><link rel="stylesheet" href="styles1.css"> </head>
+<?php
+ include("connection1.php");
+  $sql="select e.emp_number,e.emp_name,sum(ei.actualworkhour) AS actualworkhour,sum(ei.lunchtime) AS actuallunchhour from employee e  
+    join employeeinout ei on e.emp_number = ei.emp_number group by emp_number";
+  $all_employee = $conn->query($sql);
+?>
+  <body>
+   <p class="topnav"><a href = "form1.html">Employee's Attendance</a><p>
+   <table border = "1">
+    <tr>
+     <th>Emp No</th>
+     <th>Emp Name</th>
+     <th>Total Work Hours</th>
+     <th>Total Lunch Hours</th>
+    </tr>
+<?php
+    while($row=mysqli_fetch_array($all_employee)){
+?>
+    <tr>
+     <td id = "fir"><?php echo $row["emp_number"]?></td>
+     <td><?php echo $row["emp_name"]?></td>
+     <td><?php echo $row["actualworkhour"]?></td>
+     <td><?php echo $row["actuallunchhour"]?></td>
+    </tr>
+<?php
+   }
+?>
+   </table>
+   
+  </body>
+</html>
